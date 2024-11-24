@@ -67,12 +67,18 @@ func printTaskTable(taskTable timetable.Table) {
 	tableRows := make([]table.Row, len(taskTable))
 	totalTime := time.Duration(0)
 	for i, task := range taskTable {
+		taskTitle := task.TaskTitle
+
+		if len([]rune(taskTitle)) > 50 {
+			taskTitle = string([]rune(taskTitle)[:50]) + "..."
+		}
+
 		tableRows[i] = table.Row{
 			task.TaskKey,
-			task.TaskTitle,
+			taskTitle,
 			task.Comment,
 			task.Duration,
-			task.StartTime,
+			task.StartTime.Format("2006-01-02 15:04:05"),
 		}
 		if hasErr {
 			tableRows[i] = append(tableRows[i], task.Err)

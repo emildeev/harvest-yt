@@ -4,6 +4,7 @@ import (
 	"context"
 	"regexp"
 
+	"github.com/emildeev/harvest-yt/internal/config"
 	harvestcore "github.com/emildeev/harvest-yt/internal/core/harvest"
 )
 
@@ -17,6 +18,7 @@ type adapterI interface {
 type Service struct {
 	adapter adapterI
 
+	cfg          config.Tasks
 	pushedRegexp *regexp.Regexp
 	tasksCache   []string
 }
@@ -27,10 +29,11 @@ const (
 	pushFormat  = pushedEmoji + "(%d)"
 )
 
-func New(adapter adapterI) *Service {
+func New(adapter adapterI, cfg config.Tasks) *Service {
 	return &Service{
 		adapter: adapter,
 
+		cfg:          cfg,
 		pushedRegexp: regexp.MustCompile(pushRegexp),
 	}
 }

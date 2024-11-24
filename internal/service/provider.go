@@ -19,7 +19,7 @@ func New(cfg config.Config, provider adapter.Provider) (*Provider, error) {
 
 	return &Provider{
 		YTracker:  yTracker,
-		Harvest:   harvest.New(provider.HTTP.Harvest),
+		Harvest:   harvest.New(provider.HTTP.Harvest, cfg.Tasks),
 		TimeTable: timetable.New(yTracker, cfg.Tasks),
 	}, nil
 }

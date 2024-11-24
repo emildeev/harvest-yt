@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	harvestcore "github.com/emildeev/harvest-yt/internal/core/harvest"
+	"github.com/emildeev/harvest-yt/pkg/helper"
 )
 
 func (service *Service) GetTimersList(
@@ -14,6 +15,8 @@ func (service *Service) GetTimersList(
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to get timers: %w", err)
 	}
+	timers = service.filterSkipped(timers)
+
 	pushed, notPushed = service.filterSplitPushed(timers)
 
 	return pushed, notPushed, nil
@@ -42,4 +45,14 @@ func (service *Service) MarkTimerPushed(ctx context.Context, id int64, workloadI
 		return fmt.Errorf("failed to update timer: %w", err)
 	}
 	return nil
+}
+
+func (service *Service) filterSkipped(timers harvestcore.TimeEntries) (result harvestcore.TimeEntries) {
+	skippedMap := helper.GetMapFromSlice(service.cfg.SkippedTasks)
+	for _, timer := range timers {
+		if _, ok := skippedMap[timer.Task]; !ok {
+			result = append(result, timer)
+		}
+	}
+	return result
 }
