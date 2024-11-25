@@ -36,6 +36,12 @@ and repository branch configuration
 
 		currentCfg := config.NewWithoutValidate()
 
+		fmt.Println()
+		fmt.Println(
+			"for generate Harvest API token and get account ID:\n" +
+				"https://id.getharvest.com/oauth2/access_tokens/new",
+		)
+		fmt.Println()
 		accountID, err := configcmd.HarvestAccountID(currentCfg.HTTP.Harvest.AccountID)
 		if err != nil {
 			return err

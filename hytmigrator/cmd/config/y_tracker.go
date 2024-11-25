@@ -9,9 +9,13 @@ import (
 )
 
 func YTrackerGetOrgID(defaultVal int) (int, error) {
+	fmt.Println()
+	fmt.Println("for get organization ID: https://tracker.yandex.ru/settings")
+	fmt.Println()
+
 	validate := func(input string) error {
 		if input == "" {
-			return fmt.Errorf("for get organization ID: https://tracker.yandex.ru/settings")
+			return fmt.Errorf("organization ID is required")
 		}
 		val, err := strconv.Atoi(input)
 		if err != nil {
@@ -49,12 +53,16 @@ func YTrackerGetOrgID(defaultVal int) (int, error) {
 }
 
 func YTrackerGetToken(defaultVal string) (string, error) {
+	fmt.Println()
+	fmt.Println(
+		"for generate yandex tracker  token\n" +
+			"https://oauth.yandex.ru/authorize?response_type=token&client_id=711865fe0ef3478ea09e895878cd275b",
+	)
+	fmt.Println()
+
 	validate := func(input string) error {
 		if input == "" {
-			return fmt.Errorf(
-				"for get token: https://oauth.yandex.ru/authorize?response_type=token&" +
-					"client_id=711865fe0ef3478ea09e895878cd275b",
-			)
+			return fmt.Errorf("token is required")
 		}
 		validateRegexp := "[0-9a-zA-Z\\-_]{60}"
 		matched, err := regexp.MatchString(validateRegexp, input)

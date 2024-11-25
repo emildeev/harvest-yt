@@ -17,7 +17,7 @@ func GetStartTime(defaultVal string) (string, error) {
 	}
 
 	prompt := promptui.Prompt{
-		Label:    "Start Time (" + time.TimeOnly + ")",
+		Label:    "Time from start spend time (" + time.TimeOnly + ")",
 		Default:  defaultVal,
 		Validate: validate,
 	}
