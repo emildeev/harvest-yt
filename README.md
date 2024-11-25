@@ -6,7 +6,7 @@ and git commands for getting current brunch and repository
 ## Installation
 
 ```bash
-go install --mod=mod github.com/emildeev/harvest_yt/hytmigrator
+go install --mod=mod github.com/emildeev/harvest-yt/hytmigrator
 ```
 
 ## Usage
