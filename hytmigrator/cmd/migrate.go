@@ -47,7 +47,18 @@ or communication tasks for get yandex tracker task key`,
 
 		printTaskTable(taskTable)
 
-		helper.GetConfirmation()
+		confirm := helper.GetConfirmation()
+		if !confirm {
+			fmt.Println("Migration canceled")
+			return nil
+		}
+
+		err = provider.Migrator.SpendTime(ctx, taskTable)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println("Migration completed")
 
 		return nil
 	},

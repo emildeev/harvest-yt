@@ -4,7 +4,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/becoded/go-harvest/harvest"
+	"github.com/emildeev/go-harvest/harvest"
 	"github.com/golang-module/carbon/v2"
 
 	harvestcore "github.com/emildeev/harvest-yt/internal/core/harvest"

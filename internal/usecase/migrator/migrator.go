@@ -27,7 +27,7 @@ type (
 		MarkTimerPushed(ctx context.Context, id int64, workloadId int) error
 	}
 	timeTableI interface {
-		Generate(ctx context.Context, entries harvestcore.TimeEntries) timetablecore.Table
+		Generate(ctx context.Context, entries harvestcore.TimeEntries, offset time.Duration) timetablecore.Table
 	}
 )
 

@@ -6,12 +6,16 @@ import (
 	"github.com/sosodev/duration"
 )
 
+const (
+	timeFormat = "2006-01-02T15:04:05-0700"
+)
+
 func unmarshalTime(duration string) (time.Time, error) {
-	return time.Parse(time.RFC3339, duration)
+	return time.Parse(timeFormat, duration)
 }
 
 func marshalTime(t time.Time) string {
-	return t.Format(time.RFC3339)
+	return t.Format(timeFormat)
 }
 
 func unmarshalDuration(durationStr string) (time.Duration, error) {

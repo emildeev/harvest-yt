@@ -20,4 +20,5 @@ type Element struct {
 	Duration  time.Duration
 	Err       error
 	StartTime time.Time
+	TimerID   int64
 }

@@ -6,26 +6,36 @@ import (
 	"strings"
 	"time"
 
+	"github.com/golang-module/carbon/v2"
+
 	harvestcore "github.com/emildeev/harvest-yt/internal/core/harvest"
 	"github.com/emildeev/harvest-yt/internal/core/time_table"
 	"github.com/emildeev/harvest-yt/pkg/helper"
 )
 
-func (service *Service) Generate(ctx context.Context, entries harvestcore.TimeEntries) timetablecore.Table {
+func (service *Service) Generate(
+	ctx context.Context,
+	entries harvestcore.TimeEntries,
+	offset time.Duration,
+) timetablecore.Table {
 	developerSlice := helper.GetMapFromSlice(service.cfg.DevelopTasks)
 
 	result := make(timetablecore.Table, 0, len(entries))
 
-	currentStartTime, _ := time.Parse(time.TimeOnly, service.cfg.StartTime)
-	dateNow := time.Now().Truncate(24 * time.Hour).Add(-24 * time.Hour)
-	currentStartTime = currentStartTime.AddDate(dateNow.Year(), int(dateNow.Month()), dateNow.Day())
+	dateNow := carbon.Now()
+	startTime := carbon.ParseByLayout(service.cfg.StartTime, time.TimeOnly, dateNow.Location())
+	startTime = startTime.SetDate(dateNow.Year(), dateNow.Month(), dateNow.Day())
+	currentStartTime := startTime.StdTime()
+
 	for _, entry := range entries {
-		var task timetablecore.Element
+		task := timetablecore.Element{}
 		if _, ok := developerSlice[entry.Task]; ok {
 			task = service.getForDeveloperTask(entry)
 		} else {
 			task = service.getForCommunication(entry)
 		}
+
+		task.TimerID = entry.ID
 
 		taskInfo, err := service.yTrackerService.ValidateTicketForSpend(ctx, task.TaskKey)
 		if err != nil {
@@ -36,9 +46,11 @@ func (service *Service) Generate(ctx context.Context, entries harvestcore.TimeEn
 		task.TaskTitle = taskInfo.Title
 
 		task.StartTime = currentStartTime
-		result = append(result, task)
+		if task.Err == nil {
+			currentStartTime = currentStartTime.Add(task.Duration)
+		}
 
-		currentStartTime = currentStartTime.Add(task.Duration)
+		result = append(result, task)
 	}
 	return result
 }

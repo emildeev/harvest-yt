@@ -25,7 +25,7 @@ type Service struct {
 
 const (
 	pushedEmoji = "\u2705"
-	pushRegexp  = pushedEmoji + "([0-9]+)"
+	pushRegexp  = pushedEmoji + "\\([0-9]+\\)"
 	pushFormat  = pushedEmoji + "(%d)"
 )
 

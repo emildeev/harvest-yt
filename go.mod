@@ -4,6 +4,7 @@ go 1.23.2
 
 require (
 	github.com/becoded/go-harvest v0.0.0-20241022061052-c28d394e2dc2
+	github.com/emildeev/go-harvest v1.0.1
 	github.com/emildeev/yandex-tracker-go v1.0.1
 	github.com/go-playground/validator/v10 v10.22.0
 	github.com/go-resty/resty/v2 v2.16.2

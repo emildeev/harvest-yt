@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/becoded/go-harvest/harvest"
+	"github.com/emildeev/go-harvest/harvest"
 )
 
 const (
