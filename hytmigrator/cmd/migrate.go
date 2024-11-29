@@ -83,11 +83,15 @@ func printTaskTable(taskTable timetable.Table) {
 		if len([]rune(taskTitle)) > 50 {
 			taskTitle = string([]rune(taskTitle)[:50]) + "..."
 		}
+		comment := task.Comment
+		if len([]rune(comment)) > 40 {
+			comment = string([]rune(comment)[:40]) + "..."
+		}
 
 		tableRows[i] = table.Row{
 			task.TaskKey,
 			taskTitle,
-			task.Comment,
+			comment,
 			task.Duration,
 			task.StartTime.Format("2006-01-02 15:04:05"),
 		}
