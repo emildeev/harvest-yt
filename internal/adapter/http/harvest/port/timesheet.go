@@ -56,6 +56,9 @@ func GetTimeEntryFromTimeEntry(entry *harvest.TimeEntry) harvestcore.TimeEntry {
 	if entry.IsRunning != nil {
 		res.IsRunning = *entry.IsRunning
 	}
+	if entry.CreatedAt != nil {
+		res.CreatedAt = *entry.CreatedAt
+	}
 	return res
 }
 

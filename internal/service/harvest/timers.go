@@ -3,6 +3,7 @@ package harvest
 import (
 	"context"
 	"fmt"
+	"sort"
 
 	harvestcore "github.com/emildeev/harvest-yt/internal/core/harvest"
 	"github.com/emildeev/harvest-yt/pkg/helper"
@@ -15,6 +16,13 @@ func (service *Service) GetTimersList(
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to get timers: %w", err)
 	}
+
+	sort.Slice(
+		timers, func(i, j int) bool {
+			return timers[i].CreatedAt.Before(timers[j].CreatedAt)
+		},
+	)
+
 	timers = service.filterSkipped(timers)
 
 	pushed, notPushed = service.filterSplitPushed(timers)

@@ -13,4 +13,5 @@ type TimeEntry struct {
 	RoundedHours time.Duration
 	Notes        string
 	IsRunning    bool
+	CreatedAt    time.Time
 }
